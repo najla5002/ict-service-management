@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4 class="fw-bold mb-4"><i class="fas fa-question-circle me-2"></i> Help & FAQ</h4>
+
+<!-- Quick Links -->
+<div class="row mb-4">
+  <div class="col-md-3">
+    <div class="card text-center p-3" style="cursor:pointer" onclick="location.href='/tickets/new/'">
+      <i class="fas fa-plus-circle fa-2x text-primary mb-2"></i>
+      <p class="mb-0 fw-bold">Submit Ticket</p>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center p-3" style="cursor:pointer" onclick="location.href='/tickets/'">
+      <i class="fas fa-ticket-alt fa-2x text-warning mb-2"></i>
+      <p class="mb-0 fw-bold">My Tickets</p>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center p-3" style="cursor:pointer" onclick="location.href='/profile/'">
+      <i class="fas fa-user-cog fa-2x text-success mb-2"></i>
+      <p class="mb-0 fw-bold">My Profile</p>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center p-3" style="cursor:pointer" onclick="location.href='/notifications/'">
+      <i class="fas fa-bell fa-2x text-danger mb-2"></i>
+      <p class="mb-0 fw-bold">Notifications</p>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ Accordion -->
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0 fw-bold">Frequently Asked Questions</h5>
+  </div>
+  <div class="card-body">
+    <div class="accordion" id="faqAccordion">
+
+      <div class="accordion-item border-0 mb-2">
+        <h2 class="accordion-header">
+          <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+            How do I submit a new ticket?
+          </button>
+        </h2>
+        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-muted">
+            Click on <strong>New Ticket</strong> in the sidebar or dashboard. Fill in the title, description, category and priority then click <strong>Submit Ticket</strong>.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border-0 mb-2">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+            How do I track my ticket status?
+          </button>
+        </h2>
+        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-muted">
+            Go to <strong>All Tickets</strong> in the sidebar. You can see the status of all your tickets. Status can be Pending, In Progress, Resolved or Closed.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border-0 mb-2">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+            What are the ticket priority levels?
+          </button>
+        </h2>
+        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-muted">
+            There are 4 priority levels: <span class="badge-low">Low</span> for minor issues,
+            <span class="badge-medium">Medium</span> for normal issues,
+            <span class="badge-high">High</span> for urgent issues, and
+            <span class="badge-critical">Critical</span> for emergency issues that need immediate attention.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border-0 mb-2">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+            What ticket categories are available?
+          </button>
+        </h2>
+        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-muted">
+            Available categories are: Network Issue, Hardware/Computer Fault, UPS/Power Problem, Software Issue, Account/Access Issue, and Other.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border-0 mb-2">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+            How do I add a comment to my ticket?
+          </button>
+        </h2>
+        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-muted">
+            Open your ticket by clicking <strong>View</strong>. Scroll down to the Comments section, type your message and click <strong>Add Comment</strong>.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border-0 mb-2">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+            How will I know when my ticket is updated?
+          </button>
+        </h2>
+        <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-muted">
+            You will receive an in-system notification when your ticket status changes. Click the <strong>Notifications</strong> bell icon in the sidebar to view all notifications.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border-0 mb-2">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">
+            How do I update my profile information?
+          </button>
+        </h2>
+        <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-muted">
+            Click on <strong>My Profile</strong> in the sidebar. Update your name, email, phone or department and click <strong>Save Changes</strong>.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border-0 mb-2">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq8">
+            Who can I contact for help?
+          </button>
+        </h2>
+        <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-muted">
+            Submit a ticket with category <strong>Other</strong> and describe your issue. The ICT team will respond as soon as possible.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

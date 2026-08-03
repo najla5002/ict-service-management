@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card mb-4">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Ticket #{{ ticket.id }} - {{ ticket.title }}</h5>
+    <div class="d-flex gap-2">
+      <a href="/tickets/{{ ticket.pk }}/update/" class="btn btn-warning btn-sm">
+        <i class="fas fa-edit me-1"></i> Update
+      </a>
+      {% if ticket.status != 'closed' %}
+      <form method="post" style="display:inline;">
+        {% csrf_token %}
+        <button name="close_ticket" type="submit" class="btn btn-danger btn-sm"
+          onclick="return confirm('Close this ticket?')">
+          <i class="fas fa-times-circle me-1"></i> Close
+        </button>
+      </form>
+      {% else %}
+      <form method="post" style="display:inline;">
+        {% csrf_token %}
+        <button name="reopen_ticket" type="submit" class="btn btn-success btn-sm"
+          onclick="return confirm('Reopen this ticket?')">
+          <i class="fas fa-redo me-1"></i> Reopen
+        </button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Category:</strong> {{ ticket.get_category_display }}</p>
+        <p><strong>Priority:</strong> <span class="badge-{{ ticket.priority }}">{{ ticket.get_priority_display }}</span></p>
+        <p><strong>Status:</strong> <span class="badge-{{ ticket.status }}">{{ ticket.get_status_display }}</span></p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Created by:</strong> {{ ticket.created_by }}</p>
+        <p><strong>Assigned to:</strong> {{ ticket.assigned_to|default:"Not assigned" }}</p>
+        <p><strong>Date:</strong> {{ ticket.created_at|date:"d M Y H:i" }}</p>
+      </div>
+    </div>
+    <hr>
+    <p><strong>Description:</strong></p>
+    <p class="text-muted">{{ ticket.description }}</p>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header"><h5 class="mb-0">Comments</h5></div>
+  <div class="card-body">
+    {% for comment in comments %}
+    <div class="mb-3 p-3 bg-light rounded">
+      <strong>{{ comment.author }}</strong>
+      <small class="text-muted ms-2">{{ comment.created_at|date:"d M Y H:i" }}</small>
+      <p class="mb-0 mt-1">{{ comment.message }}</p>
+    </div>
+    {% empty %}
+    <p class="text-muted">No comments yet</p>
+    {% endfor %}
+    <hr>
+    <h6>Add Comment</h6>
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">{{ comment_form.message }}</div>
+      <button name="comment_submit" type="submit" class="btn btn-primary btn-sm">
+        <i class="fas fa-comment me-1"></i> Add Comment
+      </button>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><h5 class="mb-0">Maintenance Logs</h5></div>
+  <div class="card-body">
+    {% for log in logs %}
+    <div class="mb-3 p-3 bg-light rounded">
+      <strong>{{ log.technician }}</strong>
+      <small class="text-muted ms-2">{{ log.logged_at|date:"d M Y H:i" }}</small>
+      <p class="mb-0 mt-1">{{ log.action_taken }}</p>
+    </div>
+    {% empty %}
+    <p class="text-muted">No logs yet</p>
+    {% endfor %}
+    <hr>
+    <h6>Add Log</h6>
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">{{ log_form.action_taken }}</div>
+      <button name="log_submit" type="submit" class="btn btn-success btn-sm">
+        <i class="fas fa-wrench me-1"></i> Add Log
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4 class="fw-bold mb-4"><i class="fas fa-user-cog me-2"></i> My Profile</h4>
+
+<div class="row">
+  <!-- Profile Info Card -->
+  <div class="col-md-4 mb-4">
+    <div class="card text-center">
+      <div class="card-body p-4">
+        <div style="width:80px;height:80px;background:linear-gradient(135deg,#0d47a1,#1e88e5);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 15px;">
+          <i class="fas fa-user fa-2x text-white"></i>
+        </div>
+        <h5 class="fw-bold">{{ user.get_full_name|default:user.username }}</h5>
+        <p class="text-muted mb-1">{{ user.email }}</p>
+        <span class="badge-{{ user_profile.role }} mt-2 d-inline-block">
+          {{ user_profile.get_role_display }}
+        </span>
+        <hr>
+        <p class="mb-1"><i class="fas fa-phone me-2 text-primary"></i>{{ user_profile.phone|default:"Not set" }}</p>
+        <p class="mb-0"><i class="fas fa-building me-2 text-primary"></i>{{ user_profile.department|default:"Not set" }}</p>
+      </div>
+    </div>
+
+    <!-- My Ticket Stats -->
+    <div class="card mt-4">
+      <div class="card-header">
+        <h6 class="mb-0 fw-bold">My Ticket Statistics</h6>
+      </div>
+      <div class="card-body">
+        <div class="d-flex justify-content-between mb-2">
+          <span>Total Tickets</span>
+          <strong>{{ total }}</strong>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span>Pending</span>
+          <span class="badge-pending">{{ pending }}</span>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span>In Progress</span>
+          <span class="badge-in_progress">{{ in_progress }}</span>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span>Resolved</span>
+          <span class="badge-resolved">{{ resolved }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change Password -->
+    <div class="card mt-4">
+      <div class="card-body text-center">
+        <i class="fas fa-lock fa-2x text-danger mb-3 d-block"></i>
+        <p class="text-muted mb-3">Want to change your password?</p>
+        <a href="/change-password/" class="btn btn-outline-danger w-100">
+          <i class="fas fa-lock me-2"></i> Change Password
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Profile Form -->
+  <div class="col-md-8 mb-4">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0 fw-bold">Edit Profile</h5>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">First Name</label>
+              <input type="text" name="first_name" class="form-control"
+                value="{{ user.first_name }}">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">Last Name</label>
+              <input type="text" name="last_name" class="form-control"
+                value="{{ user.last_name }}">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Email Address</label>
+            <input type="email" name="email" class="form-control"
+              value="{{ user.email }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Phone Number</label>
+            <input type="text" name="phone" class="form-control"
+              value="{{ user_profile.phone }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Department</label>
+            <input type="text" name="department" class="form-control"
+              value="{{ user_profile.department }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Username</label>
+            <input type="text" class="form-control"
+              value="{{ user.username }}" disabled>
+            <small class="text-muted">Username cannot be changed</small>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Role</label>
+            <input type="text" class="form-control"
+              value="{{ user_profile.get_role_display }}" disabled>
+            <small class="text-muted">Role is assigned by admin</small>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save me-2"></i> Save Changes
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

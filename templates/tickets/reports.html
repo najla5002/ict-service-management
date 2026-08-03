@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4 class="fw-bold mb-4">
+  <i class="fas fa-chart-bar me-2"></i> Reports & Statistics
+</h4>
+
+<!-- Summary Cards -->
+<div class="row mb-4">
+  <div class="col-md-3">
+    <div class="stat-card" style="background:linear-gradient(135deg,#1565c0,#1e88e5)">
+      <h6>Total Tickets</h6>
+      <h2>{{ total }}</h2>
+      <i class="fas fa-ticket-alt"></i>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card" style="background:linear-gradient(135deg,#e65100,#fb8c00)">
+      <h6>Pending</h6>
+      <h2>{{ pending }}</h2>
+      <i class="fas fa-clock"></i>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card" style="background:linear-gradient(135deg,#0277bd,#29b6f6)">
+      <h6>In Progress</h6>
+      <h2>{{ in_progress }}</h2>
+      <i class="fas fa-spinner"></i>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card" style="background:linear-gradient(135deg,#2e7d32,#66bb6a)">
+      <h6>Resolved</h6>
+      <h2>{{ resolved }}</h2>
+      <i class="fas fa-check-circle"></i>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Tickets by Status Chart -->
+  <div class="col-md-6 mb-4">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0 fw-bold">Tickets by Status</h5>
+      </div>
+      <div class="card-body">
+        <canvas id="statusChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tickets by Category Chart -->
+  <div class="col-md-6 mb-4">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0 fw-bold">Tickets by Category</h5>
+      </div>
+      <div class="card-body">
+        <canvas id="categoryChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tickets by Priority Chart -->
+  <div class="col-md-6 mb-4">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0 fw-bold">Tickets by Priority</h5>
+      </div>
+      <div class="card-body">
+        <canvas id="priorityChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <div class="col-md-6 mb-4">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0 fw-bold">Summary Table</h5>
+      </div>
+      <div class="card-body p-0">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th class="ps-4">Category</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="ps-4">Network Issue</td><td>{{ network }}</td></tr>
+            <tr><td class="ps-4">Hardware Fault</td><td>{{ hardware }}</td></tr>
+            <tr><td class="ps-4">UPS/Power Problem</td><td>{{ ups }}</td></tr>
+            <tr><td class="ps-4">Software Issue</td><td>{{ software }}</td></tr>
+            <tr><td class="ps-4">Account/Access</td><td>{{ account }}</td></tr>
+            <tr><td class="ps-4">Other</td><td>{{ other }}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Status Chart
+  new Chart(document.getElementById('statusChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Pending', 'In Progress', 'Resolved', 'Closed'],
+      datasets: [{
+        data: [{{ pending }}, {{ in_progress }}, {{ resolved }}, {{ closed }}],
+        backgroundColor: ['#fb8c00', '#1e88e5', '#66bb6a', '#9e9e9e'],
+        borderWidth: 0
+      }]
+    },
+    options: { plugins: { legend: { position: 'bottom' } } }
+  });
+
+  // Category Chart
+  new Chart(document.getElementById('categoryChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Network', 'Hardware', 'UPS', 'Software', 'Account', 'Other'],
+      datasets: [{
+        label: 'Tickets',
+        data: [{{ network }}, {{ hardware }}, {{ ups }}, {{ software }}, {{ account }}, {{ other }}],
+        backgroundColor: '#1e88e5',
+        borderRadius: 6
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+    }
+  });
+
+  // Priority Chart
+  new Chart(document.getElementById('priorityChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Low', 'Medium', 'High', 'Critical'],
+      datasets: [{
+        data: [{{ low }}, {{ medium }}, {{ high }}, {{ critical }}],
+        backgroundColor: ['#66bb6a', '#ffa726', '#ef5350', '#880e4f'],
+        borderWidth: 0
+      }]
+    },
+    options: { plugins: { legend: { position: 'bottom' } } }
+  });
+</script>
+{% endblock %}

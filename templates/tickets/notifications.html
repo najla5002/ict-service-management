@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4 class="fw-bold mb-4">
+  <i class="fas fa-bell me-2"></i> Notifications
+</h4>
+
+<div class="card">
+  <div class="card-body p-0">
+    {% for notif in notifications %}
+    <div class="d-flex align-items-start p-3 border-bottom">
+      <div style="width:40px;height:40px;background:{% if notif.is_read %}#e0e0e0{% else %}linear-gradient(135deg,#1565c0,#1e88e5){% endif %};border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:15px;flex-shrink:0;">
+        <i class="fas fa-bell" style="color:{% if notif.is_read %}#888{% else %}#fff{% endif %};font-size:0.9rem;"></i>
+      </div>
+      <div class="flex-grow-1">
+        <p class="mb-1">{{ notif.message }}</p>
+        <small class="text-muted">
+          <i class="fas fa-clock me-1"></i>
+          {{ notif.created_at|date:"d M Y H:i" }}
+        </small>
+      </div>
+      {% if not notif.is_read %}
+      <span style="background:#1565c0;color:#fff;border-radius:20px;padding:3px 10px;font-size:0.75rem;">New</span>
+      {% endif %}
+    </div>
+    {% empty %}
+    <div class="text-center py-5 text-muted">
+      <i class="fas fa-bell-slash fa-3x mb-3 d-block"></i>
+      No notifications yet
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
